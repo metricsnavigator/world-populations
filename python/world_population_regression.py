@@ -74,14 +74,14 @@ for i in result.params:
     print(round(i,4))
 
 
-#################################
+# -------------------------------------------------- #
 # regression on world life expectancy rates
 modelLE = sm.OLS.from_formula("WLD_Exp ~ Year",data=pop_df)
 resultLE = modelLE.fit()
 print(resultLE.summary())
 
 
-#################################
+# -------------------------------------------------- #
 # future predictions
 
 yearPredictions = []
