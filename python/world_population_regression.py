@@ -74,5 +74,12 @@ for i in result.params:
     print(round(i,0))
 
 
+#################################
+# regression on world life expectancy rates
+model = sm.OLS.from_formula("WLD_Exp ~ Year",data=pop_df)
+result = model.fit()
+print(result.summary())
+
+
 ## end of script
 
