@@ -1,7 +1,7 @@
 '''
 Author: Eric Reschke
 Cite: https://metricsnavigator.org/world-population-growth/
-Last Reviewed: 2022-10-02
+Last Reviewed: 2022-10-09
 License: Open to all
 '''
 
@@ -71,14 +71,43 @@ print(result.summary())
 
 # use this loop to get the full list of coefficients rounded
 for i in result.params:
-    print(round(i,0))
+    print(round(i,4))
 
 
 #################################
 # regression on world life expectancy rates
-model = sm.OLS.from_formula("WLD_Exp ~ Year",data=pop_df)
-result = model.fit()
-print(result.summary())
+modelLE = sm.OLS.from_formula("WLD_Exp ~ Year",data=pop_df)
+resultLE = modelLE.fit()
+print(resultLE.summary())
+
+
+#################################
+# future predictions
+
+yearPredictions = []
+x=2018
+for i in range(82):
+    x+=1
+    yearPredictions.append(x)
+
+# add the sub-regression model math to predict
+pred_df = pd.DataFrame(yearPredictions,columns=['Year'])
+pred_df['WLD_Exp'] = (pred_df['Year']*0.3161)+(-564.4153)
+pred_df['WLD_Pop'] = 0 # placeholder for later union
+
+# add the main regression model to the new dataframe
+pred_df['Prediction'] = round((92567774*pred_df['Year'])+(-39573756*pred_df['WLD_Exp'])+(-176324423234),0)
+
+# run this (optional) to see the whole numbers displayed in pandas without scientific notation...
+FuturePredictions = []
+for i in pred_df['Prediction']:
+    FuturePredictions.append(round(Decimal(i),0))
+pred_df['Prediction'] = FuturePredictions
+
+# stack both past and future predictions together in one dataset
+FullLinearPrediction = pop_df.copy()
+FullLinearPrediction = FullLinearPrediction[['Year','WLD_Exp','WLD_Pop','Prediction']]
+FullLinearPrediction = pd.concat([FullLinearPrediction,pred_df])
 
 
 ## end of script
