@@ -16,16 +16,6 @@ import statsmodels.api as sm
 dataImport = pd.read_csv('5. future_regression_summary.csv')
 pop_df = pd.DataFrame.copy(dataImport)
 
-# assign each year to a sequential number from the import
-yearNum = []
-x=1
-for i in pop_df['Year']:
-    yearNum.append(x)
-    x+=1
-
-pop_df['yearnum'] = yearNum
-pop_df = pop_df[['yearnum','WLD_Exp','WLD_Fert','WLD_Pop']]
-
 # convert data to arrays to set up the regression model
 X = pop_df.iloc[:,0:-1].values
 Y = pop_df.iloc[:,-1].values
@@ -43,7 +33,7 @@ y_export = pd.DataFrame(FinalPrediction)
 y_export.columns=['Prediction']
 pop_df['Prediction'] = y_export['Prediction']
 
-# --------------------------------------------------#
+# -------------------------------------------------- #
 
 ## regression graph
 plt.scatter(pop_df['WLD_Pop'],pop_df['Prediction'],color ='yellow')
@@ -72,7 +62,7 @@ coeff.columns=['Results']
 print(coeff,'\n')
 
 # general summary of t-stat and p-values using the statsmodels library
-model = sm.OLS.from_formula("WLD_Pop ~ yearnum+WLD_Exp+WLD_Fert",data=pop_df)
+model = sm.OLS.from_formula("WLD_Pop ~ Year+WLD_Exp+WLD_Fert",data=pop_df)
 result = model.fit()
 print(result.summary())
 
