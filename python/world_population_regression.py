@@ -66,6 +66,13 @@ model = sm.OLS.from_formula("WLD_Pop ~ Year+WLD_Exp+WLD_Fert",data=pop_df)
 result = model.fit()
 print(result.summary())
 
+# use this command to list out the possibilities of data extraction from the model
+# dir(result)
+
+# use this loop to get the full list of coefficients rounded
+for i in result.params:
+    print(round(i,0))
+
 
 ## end of script
 
