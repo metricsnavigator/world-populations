@@ -1,7 +1,7 @@
 '''
 Author: Eric Reschke
-Cite: https://metricsnavigator.org/world-population-growth/
-Last Reviewed: 2022-10-09
+Cite: https://www.metricsnavigator.com/world-population-growth/
+Last Reviewed: 2023-11-14
 License: Open to all
 '''
 
